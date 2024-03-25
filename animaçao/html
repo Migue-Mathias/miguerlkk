@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mover Botão e Mudar de Tela</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 300px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .move-up {
+        transform: translateY(-100px);
+    }
+
+    .move-down {
+        transform: translateY(100px);
+    }
+
+    .move-left {
+        transform: translateX(-100px);
+    }
+
+    .move-right {
+        transform: translateX(100px);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #congratsMessage {
+        font-size: 24px;
+        color: green;
+    }
+
+    #fireworks {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: black;
+    }
+
+    .video-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .video-container video {
+        width: 100%;
+        height: auto;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Você me pegaria no off?</h1>
+        <button id="moveButton">Sim</button>
+        <button id="noButton">Não</button>
+        <div id="congratsMessage" class="hidden">Parabéns. Ótima escolha!</div>
+        <div id="fireworks" class="hidden">
+            <div class="video-container">
+                <video controls autoplay loop>
+                    <source src="fogos_artificio.mp4.mp4" type="video/mp4">
+                    Seu navegador não suporta o elemento de vídeo.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const moveButton = document.getElementById('moveButton');
+        const noButton = document.getElementById('noButton');
+        const congratsMessage = document.getElementById('congratsMessage');
+        const fireworks = document.getElementById('fireworks');
+
+        let currentDirection = 0;
+
+        moveButton.addEventListener('click', () => {
+            congratsMessage.classList.remove('hidden');
+            fireworks.classList.remove('hidden');
+            // Redirecionar para o WhatsApp
+            window.location.href = 'https://api.whatsapp.com/send?phone=5579998548509&text=aceitei%20SIm!!!!!!!!!!!!!!!!!!!!!!!!!';
+        });
+
+        noButton.addEventListener('click', () => {
+            const directions = ['move-up', 'move-right', 'move-down', 'move-left'];
+            noButton.classList.remove(directions[currentDirection % directions.length]);
+            currentDirection++;
+            noButton.classList.add(directions[currentDirection % directions.length]);
+        });
+
+        noButton.addEventListener('mouseover', () => {
+            noButton.style.position = 'absolute';
+            noButton.style.top = Math.random() * (window.innerHeight - noButton.clientHeight) + 'px';
+            noButton.style.left = Math.random() * (window.innerWidth - noButton.clientWidth) + 'px';
+        });
+
+        noButton.addEventListener('mouseleave', () => {
+            noButton.style.position = 'static';
+        });
+    </script>
+</body>
+</html>
